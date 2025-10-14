@@ -7,7 +7,7 @@ public abstract class Product {
     private final String name;
     private final int productionTime;
 
-    public Product(Stirng id, String name, int productionTime) {
+    public Product(String id, String name, int productionTime) {
         this.id = id;
         this.name = name;
         this.productionTime = productionTime;
