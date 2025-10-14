@@ -1,7 +1,7 @@
 package enterprise.model.product;
 
-public class ElectronicProduct extends Product {
-    public ElectronicProduct(String id, String name, int productionTime) {
+public class ElectronicsProduct extends Product {
+    public ElectronicsProduct(String id, String name, int productionTime) {
         super(id, name, productionTime);
     }
 
