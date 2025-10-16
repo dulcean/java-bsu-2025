@@ -1,0 +1,14 @@
+# Compiled class files
+*.class
+out/
+build/
+
+# IDE files
+.idea/
+*.iml
+*.iws
+
+# Build tools
+target/
+.gradle/
+build/
