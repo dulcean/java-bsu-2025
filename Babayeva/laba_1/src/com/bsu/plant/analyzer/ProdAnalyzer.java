@@ -35,7 +35,7 @@ public record ProdAnalyzer(List<ProductionLine<? extends Product>> allLines) {
                 .max(Comparator.comparingInt(line -> line.getProducts().size()));
     }
 
-        public List<Product> getAllProductsFromLines() {
+    public List<Product> getAllProductsFromLines() {
         return allLines.stream()
                 .flatMap(line -> line.getProducts().stream())
                 .collect(Collectors.toList());
@@ -51,4 +51,5 @@ public record ProdAnalyzer(List<ProductionLine<? extends Product>> allLines) {
     public List<ProductionLine<? extends Product>> getAllLines() {
         return allLines;
     }
+
 }
