@@ -1,0 +1,11 @@
+/home/tim/Programming/java/java-bsu-2025/lab-1-task/src/main/java/com/bsu/production/model/ElectronicProduct.java
+/home/tim/Programming/java/java-bsu-2025/lab-1-task/src/main/java/com/bsu/production/line/ChemicalLine.java
+/home/tim/Programming/java/java-bsu-2025/lab-1-task/src/main/java/com/bsu/production/line/ElectronicsLine.java
+/home/tim/Programming/java/java-bsu-2025/lab-1-task/src/main/java/com/bsu/production/line/MechanicalLine.java
+/home/tim/Programming/java/java-bsu-2025/lab-1-task/src/main/java/com/bsu/production/Main.java
+/home/tim/Programming/java/java-bsu-2025/lab-1-task/src/main/java/com/bsu/production/model/ChemicalProduct.java
+/home/tim/Programming/java/java-bsu-2025/lab-1-task/src/main/java/com/bsu/production/analyzer/ProdAnalyzer.java
+/home/tim/Programming/java/java-bsu-2025/lab-1-task/src/main/java/com/bsu/production/model/Product.java
+/home/tim/Programming/java/java-bsu-2025/lab-1-task/src/main/java/com/bsu/production/model/MechanicalProduct.java
+/home/tim/Programming/java/java-bsu-2025/lab-1-task/src/main/java/com/bsu/production/validation/Validatable.java
+/home/tim/Programming/java/java-bsu-2025/lab-1-task/src/main/java/com/bsu/production/line/ProductionLine.java
