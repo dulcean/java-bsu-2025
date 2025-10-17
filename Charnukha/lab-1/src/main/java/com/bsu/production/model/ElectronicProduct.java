@@ -1,4 +1,4 @@
-package com.example.production.model;
+package com.bsu.production.model;
 
 public class ElectronicProduct extends Product {
     public ElectronicProduct(String id, String name, int productionTime) {
