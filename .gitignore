@@ -1,0 +1,71 @@
+# -----------------------
+# OS-specific junk files
+# -----------------------
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+Desktop.ini
+$RECYCLE.BIN/
+
+# -----------------------
+# Logs and diagnostics
+# -----------------------
+*.log
+*.trace
+*.stackdump
+hs_err_pid*
+replay_pid*
+
+# -----------------------
+# Java/Kotlin compiled output
+# -----------------------
+*.class
+
+# -----------------------
+# Gradle
+# -----------------------
+**/.gradle/
+**/build/
+
+# Keep Gradle Wrapper files tracked
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+!gradlew
+!gradlew.bat
+
+# -----------------------
+# IDEs and editors
+# -----------------------
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+**/out/
+
+# VS Code
+.vscode/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# NetBeans
+.nb-gradle/
+nbactions.xml
+nb-configuration.xml
+
+# -----------------------
+# Misc build folders (defensive)
+# -----------------------
+**/bin/
+**/classes/
+
+# -----------------------
+# Test/coverage reports (usually inside build/, but added defensively)
+# -----------------------
+**/reports/
+**/test-results/
+**/jacoco/
