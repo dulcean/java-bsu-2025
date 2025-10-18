@@ -139,7 +139,7 @@ public class Main {
 
     private static void runTest(String testName, Runnable testLogic) {
         System.out.println("=====================================================");
-        System.out.println("ЗАПУСК: " + testName);
+        System.out.println(testName);
         System.out.println("-----------------------------------------------------");
         testLogic.run();
         System.out.println("=====================================================\n");

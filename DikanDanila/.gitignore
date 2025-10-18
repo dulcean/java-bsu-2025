@@ -4,7 +4,7 @@ out/
 build/
 
 # IDE files
-.idea/
+../.idea/
 *.iml
 *.iws
 
