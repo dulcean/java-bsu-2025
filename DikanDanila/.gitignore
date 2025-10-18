@@ -1,0 +1,13 @@
+../.idea/
+../*.iml
+../*.iws
+
+.idea/
+*.iml
+*.iws
+
+*.class
+out/
+build/
+target/
+.gradle/
