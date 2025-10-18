@@ -1,14 +1,13 @@
-# Compiled class files
-*.class
-out/
-build/
-
-# IDE files
 ../.idea/
+../*.iml
+../*.iws
+
+.idea/
 *.iml
 *.iws
 
-# Build tools
+*.class
+out/
+build/
 target/
 .gradle/
-build/
