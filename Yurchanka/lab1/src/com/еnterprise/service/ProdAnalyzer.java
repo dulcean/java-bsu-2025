@@ -1,7 +1,7 @@
-package com.bsu.production.analyzer;
+package com.еnterprise.service;
 
-import com.bsu.production.line.ProductionLine;
-import com.bsu.production.model.Product;
+import com.еnterprise.model.line.ProductionLine;
+import com.еnterprise.model.product.Product;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -9,19 +9,12 @@ import java.util.stream.Collectors;
 public class ProdAnalyzer {
     private final List<ProductionLine<? extends Product>> allLines;
 
-    public ProdAnalyzer() {
-        this.allLines = new ArrayList<>();
-    }
-
-    public void addLine(ProductionLine<? extends Product> line) {
-        if (line == null) {
-            throw new IllegalArgumentException("Production line cannot be null");
-        }
-        allLines.add(line);
+    public ProdAnalyzer(List<ProductionLine<? extends Product>> allLines) {
+        this.allLines = allLines;
     }
 
     public List<ProductionLine<? extends Product>> getAllLines() {
-        return Collections.unmodifiableList(allLines);
+        return new ArrayList<>(allLines);
     }
 
     public List<String> getHighEfficiencyLines(double threshold) {
@@ -45,33 +38,20 @@ public class ProdAnalyzer {
                 .max(Comparator.comparingInt(line -> line.getProducts().size()));
     }
 
-    public List<Product> getAllProductsFromLines() {
+    public List getAllProductsFromLines() {
         return allLines.stream()
                 .flatMap(line -> line.getProducts().stream())
                 .collect(Collectors.toList());
     }
 
-    public double calculateTotalProductionTime() {
+
+    /**
+     * ADVANCED Расчет общего время производства всех изделий на всех линиях.
+     */
+    public int calculateTotalProductionTime() {
         return allLines.stream()
                 .flatMap(line -> line.getProducts().stream())
                 .mapToInt(Product::getProductionTime)
                 .sum();
-    }
-
-    public String getStatisticsSummary() {
-        long totalProducts = getAllProductsFromLines().size();
-        double avgEfficiency = allLines.stream()
-                .mapToDouble(ProductionLine::getEfficiency)
-                .average()
-                .orElse(0.0);
-        
-        return String.format("""
-                             Production Statistics:
-                             - Total Lines: %d
-                             - Total Products: %d
-                             - Average Efficiency: %.2f
-                             - Total Production Time: %.0f minutes""",
-                allLines.size(), totalProducts, avgEfficiency, calculateTotalProductionTime()
-        );
     }
 }
