@@ -10,7 +10,6 @@ public static void main(String[] args) {
     testCanProduce();
     testEfficiencyFilter(analyzer);
     testCountProductsByCategory(analyzer);
-    testFindMostLoadedLine(analyzer);
     testAllProductsFromLines(analyzer);
     testTotalProductionTime(analyzer);
 }
@@ -48,11 +47,6 @@ private static void testEfficiencyFilter(ProdAnalyzer analyzer) {
 private static void testCountProductsByCategory(ProdAnalyzer analyzer) {
     var counts = analyzer.countProductsByCategory();
     System.out.println("Product count by category: " + counts);
-}
-
-private static void testFindMostLoadedLine(ProdAnalyzer analyzer) {
-    Optional<ProductionLine<? extends Product>> mostLoaded = analyzer.findMostLoadedLine();
-    mostLoaded.ifPresent(line -> System.out.println("Most loaded line: " + line.getLineId()));
 }
 
 private static void testAllProductsFromLines(ProdAnalyzer analyzer) {
