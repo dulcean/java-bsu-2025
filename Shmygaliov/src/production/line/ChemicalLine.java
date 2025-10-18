@@ -1,14 +1,15 @@
-package com.bsu.production.line;
+package production.line;
 
-import com.bsu.production.model.ChemicalProduct;
-import com.bsu.production.model.Product;
+import production.model.ChemicalProduct;
+import production.model.Product;
 
 public class ChemicalLine extends ProductionLine<ChemicalProduct> {
-    
+
     public ChemicalLine(String lineId, double efficiency) {
         super(lineId, efficiency);
     }
 
+    @Override
     public boolean canProduce(Product product) {
         return product instanceof ChemicalProduct;
     }

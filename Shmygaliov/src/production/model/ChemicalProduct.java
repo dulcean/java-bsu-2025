@@ -1,7 +1,6 @@
-package com.bsu.production.model;
+package production.model;
 
 public class ChemicalProduct extends Product {
-    
     public ChemicalProduct(String id, String name, int productionTime) {
         super(id, name, productionTime);
     }
