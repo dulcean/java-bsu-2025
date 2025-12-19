@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎌 Генератор случайного аниме</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="container">
+    <h1><i class="fas fa-dice"></i> Случайное аниме</h1>
+
+    <p class="description">
+        Нажмите кнопку, чтобы получить случайное аниме для просмотра
+    </p>
+
+    <div class="image-section align-with-button">
+        <img src="images/night.jpg"
+             alt="Постер аниме"
+             style="width: 180px; height: 250px; border-radius: 8px; object-fit: cover;">
+    </div>
+
+    <form action="/api/random-anime" method="get">
+        <button type="submit">
+            <i class="fas fa-random"></i>
+            🎲 Получить случайное аниме
+        </button>
+    </form>
+
+    <div class="info">
+        <p><i class="fas fa-server"></i> Backend: Spring Boot | <i class="fas fa-database"></i> Database: H2</p>
+        <p><i class="fas fa-save"></i> Данные сохраняются между перезапусками</p>
+    </div>
+</div>
+</body>
+</html>
+
+

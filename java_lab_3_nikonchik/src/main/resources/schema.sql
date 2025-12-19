@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS anime_table (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL UNIQUE,
+    release_year INTEGER NOT NULL,
+    rating DOUBLE,
+    description TEXT NOT NULL
+);

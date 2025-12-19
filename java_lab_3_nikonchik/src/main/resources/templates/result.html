@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ваше случайное аниме</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="container">
+    <h1><i class="fas fa-film"></i> Ваше аниме на сегодня</h1>
+
+    <p class="description" style="margin-bottom: 30px;">
+        Вот что мы выбрали для вас:
+    </p>
+
+    <div class="anime-info-card"
+         style="background: rgba(30, 41, 59, 0.7);
+                    padding: 30px;
+                    border-radius: 10px;
+                    margin: 20px 0;
+                    text-align: left;
+                    border-left: 4px solid #6ee7b7;">
+
+        <div style="margin-bottom: 25px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 15px;">
+                <span style="color: #94a3b8; font-size: 0.9rem;">
+                    <i class="fas fa-hashtag"></i> ID: <span th:text="${anime.id}">1</span>
+                </span>
+            <h2 style="color: #6ee7b7; margin-top: 10px; font-size: 1.8rem;"
+                th:text="${anime.title}">Название аниме</h2>
+        </div>
+
+        <div style="display: grid; gap: 15px;">
+            <div class="detail-item">
+                <strong style="color: #cbd5e1; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-calendar"></i> Год выхода:
+                </strong>
+                <span style="color: #60a5fa; font-size: 1.1rem;"
+                      th:text="${anime.releaseYear}">1970</span>
+            </div>
+
+            <div class="detail-item">
+                <strong style="color: #cbd5e1; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-star"></i> Рейтинг:
+                </strong>
+                <span style="color: #fbbf24; font-weight: bold; font-size: 1.1rem;"
+                      th:text="${anime.rating}">7.0</span>
+                <span th:if="${anime.rating > 8.5}"
+                      style="color: #10b981; margin-left: 10px; font-size: 0.9rem;">
+                        <i class="fas fa-fire"></i> Топовый выбор!
+                    </span>
+            </div>
+
+            <div class="detail-item">
+                <strong style="color: #cbd5e1; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-file-alt"></i> Описание:
+                </strong>
+                <p style="color: #e2e8f0; line-height: 1.6; margin-top: 8px;"
+                   th:text="${anime.description}">
+                    Подробное описание аниме сюжета и особенностей
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
+        <a href="/" style="text-decoration: none;">
+            <button style="background: linear-gradient(to right, #10b981, #059669);">
+                <i class="fas fa-home"></i> На главную
+            </button>
+        </a>
+
+        <button onclick="window.location.reload()"
+                style="background: linear-gradient(to right, #3b82f6, #2563eb);">
+            <i class="fas fa-redo"></i> Другое аниме
+        </button>
+    </div>
+
+    <div class="info" style="margin-top: 40px;">
+        <p><i class="fas fa-clock"></i> Приятного просмотра!</p>
+    </div>
+</div>
+</body>
+</html>
