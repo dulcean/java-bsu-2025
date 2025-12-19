@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Waifu Picker & Search</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #fdf2f8; color: #333; display: flex; flex-direction: column; align-items: center; padding-top: 50px; }
+        .container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 400px; text-align: center; }
+        h2 { color: #db2777; margin-bottom: 20px; }
+        input[type="text"], input[type="file"] { width: 100%; padding: 12px; margin: 10px 0; border: 2px solid #fbcfe8; border-radius: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; margin: 5px 0; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-primary { background: #ec4899; color: white; }
+        .btn-primary:hover { background: #db2777; }
+        .btn-secondary { background: #94a3b8; color: white; }
+        .btn-success { background: #10b981; color: white; }
+        .btn-danger { background: #ef4444; color: white; }
+        .preview-img { width: 100%; border-radius: 10px; margin: 15px 0; border: 3px solid #fbcfe8; }
+        .stats { margin-top: 30px; width: 400px; background: #fff; padding: 15px; border-radius: 10px; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>💖 Waifu Search</h2>
+
+    <div id="step1">
+        <input type="text" id="username" placeholder="Как тебя зовут?">
+        <input type="text" id="waifuName" placeholder="Имя твоей вайфу">
+        <button class="btn-primary" onclick="searchWaifu()">Найти её!</button>
+    </div>
+
+    <div id="step2" class="hidden">
+        <p>Мы нашли это. Это твоя вайфу?</p>
+        <img id="waifuPic" class="preview-img" src="" alt="Wait...">
+        <button class="btn-success" onclick="confirmWaifu()">Да, это она!</button>
+        <button class="btn-danger" onclick="showUpload()">Нет, загрузить своё фото</button>
+    </div>
+
+    <div id="step3" class="hidden">
+        <p>Загрузи правильное изображение:</p>
+        <input type="file" id="fileInput" accept="image/*">
+        <button class="btn-primary" onclick="uploadCustom()">Сохранить и обучить систему</button>
+        <button class="btn-secondary" onclick="resetForm()">Отмена</button>
+    </div>
+</div>
+
+<div class="stats">
+    <h3>📈 Топ-5 популярных запросов:</h3>
+    <ul id="topList"></ul>
+</div>
+
+<script>
+    let currentData = { username: '', waifuName: '', imageUrl: '' };
+
+    async function searchWaifu() {
+        currentData.username = document.getElementById('username').value;
+        currentData.waifuName = document.getElementById('waifuName').value;
+
+        if (!currentData.username || !currentData.waifuName) return alert("Заполни поля!");
+
+        const res = await fetch(`/api/search-image?query=${encodeURIComponent(currentData.waifuName)}`);
+        const url = await res.text();
+
+        document.getElementById('waifuPic').src = url;
+        currentData.imageUrl = url;
+
+        document.getElementById('step1').classList.add('hidden');
+        document.getElementById('step2').classList.remove('hidden');
+    }
+
+    async function confirmWaifu() {
+        await fetch('/api/submit', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(currentData)
+        });
+        alert("Отлично! Данные сохранены.");
+        resetForm();
+    }
+
+    function showUpload() {
+        document.getElementById('step2').classList.add('hidden');
+        document.getElementById('step3').classList.remove('hidden');
+    }
+
+    async function uploadCustom() {
+        const fileInput = document.getElementById('fileInput');
+        if (!fileInput.files[0]) return alert("Выбери файл!");
+
+        const formData = new FormData();
+        formData.append('file', fileInput.files[0]);
+        formData.append('username', currentData.username);
+        formData.append('waifuName', currentData.waifuName);
+
+        const res = await fetch('/api/upload', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (res.ok) {
+            alert("Фото успешно загружено и привязано к персонажу!");
+            resetForm();
+        }
+    }
+
+    function resetForm() {
+        location.reload();
+    }
+
+    async function loadStats() {
+    const response = await fetch('/api/stats');
+    const stats = await response.json();
+    const top5 = stats.slice(0, 5);
+    document.getElementById('topList').innerHTML = top5.map(s =>
+        `<li>${s.waifuName} — <strong>${s.count}</strong> запросов</li>`
+    ).join('');
+}
+
+    loadStats();
+</script>
+</body>
+</html>
