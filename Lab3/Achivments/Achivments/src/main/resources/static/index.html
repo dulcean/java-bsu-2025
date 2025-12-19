@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Achievement Tracker</title>
+    <style>
+        body { background: #121212; color: #00ffcc; text-align: center; font-family: 'Courier New', monospace; }
+        .container { margin-top: 50px; border: 2px solid #00ffcc; display: inline-block; padding: 30px; border-radius: 20px; box-shadow: 0 0 20px #00ffcc; }
+        img { width: 350px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #00ffcc; }
+        input { padding: 10px; width: 250px; background: #222; border: 1px solid #00ffcc; color: white; }
+        button { padding: 10px 20px; background: #00ffcc; color: black; border: none; cursor: pointer; font-weight: bold; }
+        button:hover { background: #ff00ff; color: white; }
+        #list { margin-top: 20px; text-align: left; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>LEVEL UP SYSTEM</h1>
+    <img src="anime.webp" alt="Anime Character"> <br>
+
+    <input type="text" id="achivTitle" placeholder="Введите достижение...">
+    <button onclick="addAchiv()">ЗАПИСАТЬ</button>
+
+    <div id="list">
+        <h3>LOG:</h3>
+        <div id="data"></div>
+    </div>
+</div>
+
+<script>
+    async function load() {
+        const response = await fetch('/api/achiv');
+        const items = await response.json();
+        document.getElementById('data').innerHTML = items.map(i => `<p>> ${i.title} [${i.timestamp}]</p>`).join('');
+    }
+    async function addAchiv() {
+        const input = document.getElementById('achivTitle');
+        await fetch('/api/achiv', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ title: input.value })
+        });
+        input.value = '';
+        load();
+    }
+    load();
+</script>
+</body>
+</html>

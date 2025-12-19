@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<body style="background: darkred; color: white; font-family: sans-serif;">
+<h1>HACKER PANEL (SPY PAGE)</h1>
+<p>Пытаюсь украсть ваши достижения через CORS...</p>
+<div id="stolen"></div>
+<script>
+    fetch('http://localhost:8080/api/achiv')
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('stolen').innerText = "Украдено: " + JSON.stringify(data);
+        })
+        .catch(err => {
+            document.getElementById('stolen').innerText = "Ошибка CORS: " + err;
+        });
+</script>
+</body>
+</html>
