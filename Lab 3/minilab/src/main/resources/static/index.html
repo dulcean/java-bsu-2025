@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>MiniLab Tracker</title>
+</head>
+<body>
+<h2>MiniLab Tracker</h2>
+
+<input id="title" placeholder="Название лабораторной">
+<button onclick="add()">Добавить</button>
+
+<ul id="list"></ul>
+
+<script>
+    function load() {
+        fetch('/labs').then(r => r.json()).then(d => {
+            const list = document.getElementById('list');
+            list.innerHTML = '';
+            d.forEach(l => {
+                let li = document.createElement('li');
+                li.innerHTML = l.title + (l.done ? ' ✔' : '');
+                if (!l.done) {
+                    let btn = document.createElement('button');
+                    btn.innerText = 'Сдать';
+                    btn.onclick = () => done(l.id);
+                    li.appendChild(btn);
+                }
+                list.appendChild(li);
+            });
+        });
+    }
+
+    function add() {
+        const title = document.getElementById('title').value;
+        if (title.trim() === '') return;
+        fetch('/labs?title=' + encodeURIComponent(title), { method: 'POST' }).then(load);
+        document.getElementById('title').value = '';
+    }
+
+    function done(id) {
+        fetch('/labs/' + id + '/done', { method: 'POST' }).then(load);
+    }
+
+    load();
+</script>
+</body>
+</html>
