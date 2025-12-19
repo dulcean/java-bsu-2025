@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CLASSIFIED // FRIDGE_INTEL</title>
+    <style>
+        body { background: #000; color: #0f0; font-family: 'Courier New', monospace; padding: 20px; }
+        h1 { border-bottom: 2px solid #0f0; display: inline-block; }
+        .log { margin-top: 20px; font-size: 14px; }
+        .blink { animation: blinker 1s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
+    </style>
+</head>
+<body>
+<h1>TOP SECRET DATABASE ACCESS <span class="blink">_</span></h1>
+<p>Connecting to backend secure port...</p>
+<button onclick="hackDatabase()" style="background:black; border:1px solid #0f0; color:#0f0; padding:10px;">INITIATE DUMP</button>
+
+<div id="logs" class="log"></div>
+
+<script>
+    async function hackDatabase() {
+        const logs = document.getElementById('logs');
+        logs.innerHTML += "> Establishing handshake with Java 23 Kernel...<br>";
+
+        try {
+            const response = await fetch('http://localhost:8081/api/recipes');
+            const data = await response.json();
+
+            logs.innerHTML += "> ACCESS GRANTED.<br>> DOWNLOADING RECIPE MANIFEST...<br><br>";
+            data.forEach(r => {
+                logs.innerHTML += `[SECURE_ID_${r.id}]: ${r.title.toUpperCase()} // DETECTED<br>`;
+            });
+        } catch (e) {
+            logs.innerHTML += "> CONNECTION FAILED. FIREWALL ACTIVE.<br>";
+        }
+    }
+</script>
+</body>
+</html>
