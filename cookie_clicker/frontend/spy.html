@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Spy Cookie</title>
+</head>
+<body>
+    <h2>🕵️ Шпионская страница</h2>
+    <button onclick="spy()">Украсть клик</button>
+    <p id="status"></p>
+
+    <script>
+        function spy() {
+            fetch("http://localhost:8080/api/cookie/click", { method: "POST" })
+                .then(() => status.innerText = "CORS разрешил")
+                .catch(() => status.innerText = "CORS заблокировал");
+        }
+    </script>
+</body>
+</html>

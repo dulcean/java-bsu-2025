@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: cookie
+      POSTGRES_USER: cookie
+      POSTGRES_PASSWORD: cookie
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+  frontend:
+    image: nginx:alpine
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+    ports:
+      - "80:80"
