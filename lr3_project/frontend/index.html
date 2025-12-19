@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LR 3 Clicker</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; background-color: #f0f0f0; }
+        img { max-width: 300px; margin: 20px; border-radius: 10px; }
+        button { padding: 15px 30px; font-size: 20px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 5px; }
+        h1 { color: #333; }
+    </style>
+</head>
+<body>
+    <h1>Anime Clicker</h1>
+    <img src="anime.jpg" alt="Anime Girl">
+    <div>
+        <h2>Clicks: <span id="counter">0</span></h2>
+        <button onclick="doClick()">CLICK ME!</button>
+    </div>
+    <script>
+        const API_URL = 'http://localhost:8080/api';
+        
+        function updateDisplay(count) {
+            document.getElementById('counter').innerText = count;
+        }
+
+        async function doClick() {
+            try {
+                const res = await fetch(API_URL + '/click');
+                const data = await res.json();
+                updateDisplay(data);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        async function load() {
+            try {
+                const res = await fetch(API_URL + '/status');
+                const data = await res.json();
+                updateDisplay(data);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+        load();
+    </script>
+</body>
+</html>
