@@ -1,0 +1,5 @@
+com/example/cookieclicker/service/CookieService.class
+com/example/cookieclicker/controller/CookieController.class
+com/example/cookieclicker/model/CookieClick.class
+com/example/cookieclicker/repository/CookieClickRepository.class
+com/example/cookieclicker/CookieClickerApplication.class

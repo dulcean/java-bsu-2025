@@ -1,0 +1,5 @@
+/home/maria/Documents/cookie_clicker/backend/src/main/java/com/example/cookieclicker/CookieClickerApplication.java
+/home/maria/Documents/cookie_clicker/backend/src/main/java/com/example/cookieclicker/controller/CookieController.java
+/home/maria/Documents/cookie_clicker/backend/src/main/java/com/example/cookieclicker/model/CookieClick.java
+/home/maria/Documents/cookie_clicker/backend/src/main/java/com/example/cookieclicker/repository/CookieClickRepository.java
+/home/maria/Documents/cookie_clicker/backend/src/main/java/com/example/cookieclicker/service/CookieService.java

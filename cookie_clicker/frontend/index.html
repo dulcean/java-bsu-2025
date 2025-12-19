@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Cookie Clicker</title>
+</head>
+<body>
+    <h1>🍪 Cookie Clicker</h1>
+    <img src="cookie.png" width="200" onclick="clickCookie()" style="cursor:pointer;">
+    <p id="count">Кликов: 0</p>
+
+    <script>
+        function clickCookie() {
+            fetch("http://localhost:8080/api/cookie/click", { method: "POST" })
+                .then(r => r.text())
+                .then(c => document.getElementById("count").innerText = "Кликов: " + c);
+        }
+    </script>
+</body>
+</html>
