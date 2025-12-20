@@ -1,0 +1,30 @@
+-------------------------------------------------------------------------------
+Test set: com.bsu.bank.processor.TransactionProcessorTest$ConcurrencyTests
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 1.461 s <<< FAILURE! - in com.bsu.bank.processor.TransactionProcessorTest$ConcurrencyTests
+com.bsu.bank.processor.TransactionProcessorTest$ConcurrencyTests.submitTransaction_concurrencyTest  Time elapsed: 0.638 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Final balance must be exactly 2000.0, proving atomicity with ReentrantLock ==> expected: <2000.0> but was: <1990.0>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:86)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1020)
+	at com.bsu.bank.processor.TransactionProcessorTest$ConcurrencyTests.submitTransaction_concurrencyTest(TransactionProcessorTest.java:110)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.bsu.bank.processor.TransactionProcessorTest$ConcurrencyTests.submitTransaction_competingCommands  Time elapsed: 0.745 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Final balance must be 1500.0, confirming correct concurrency management. ==> expected: <1500.0> but was: <1495.0>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:86)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1020)
+	at com.bsu.bank.processor.TransactionProcessorTest$ConcurrencyTests.submitTransaction_competingCommands(TransactionProcessorTest.java:149)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+

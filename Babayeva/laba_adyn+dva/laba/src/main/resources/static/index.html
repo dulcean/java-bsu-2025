@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Контрольная тряска</title>
+    <style>
+        @font-face {
+    font-family: 'Minecraft';
+    src: url('/fonts/minecraft.ttf') format('truetype');
+}
+
+        * { 
+            box-sizing: border-box; 
+            font-family: 'Minecraft', sans-serif !important; 
+        }
+
+        body, html { 
+            margin: 0; padding: 0; width: 100%; height: 100%; 
+            overflow: hidden; background: #000;
+        }
+
+        #change-teacher-btn {
+            position: absolute; top: 30px; left: 30px; z-index: 1000;
+            padding: 15px 25px; background: #34495e; color: white;
+            border: 2px solid white; cursor: pointer; font-size: 1.2em;
+        }
+
+        .main-viewport {
+            position: relative; width: 100vw; height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        #teacher-img {
+            position: absolute; width: 100%; height: 100%;
+            object-fit: contain; z-index: 1;
+        }
+
+        .ui-overlay {
+            position: relative; z-index: 2; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: space-between;
+            align-items: center; padding: 20px;
+        }
+
+        #status-text {
+            background: rgba(0, 0, 0, 0.85); color: white;
+            padding: 10px 30px; border-radius: 10px; font-size: 2em;
+            text-align: center; border: 2px solid white;
+        }
+
+        .tickets-grid {
+            display: grid; grid-template-columns: repeat(10, 1fr);
+            gap: 10px; width: 90%; max-width: 1200px;
+        }
+
+        .ticket-btn {
+            background: url('images/ticket_icon.png') no-repeat center;
+            background-size: contain; width: 100%; aspect-ratio: 3/4;
+            border: none; cursor: pointer; transition: 0.2s;
+        }
+        .ticket-btn:hover { transform: translateY(-10px); }
+
+        #quiz-section {
+            display: none; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); background: #2c3e50; 
+            color: #ecf0f1; width: 1300px; padding: 60px;
+            border-radius: 20px; border: 3px solid white; text-align: center;
+        }
+
+        #options { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+        .opt-btn {
+            padding: 20px; cursor: pointer; background: #34495e; 
+            color: white; border: 2px solid #3498db; font-size: 1.8em;
+        }
+        .opt-btn:hover { background: #3498db; }
+
+        #reset-btn {
+            display: none; padding: 20px 45px; font-size: 2.5em;
+            background: #e74c3c; color: white; border: none; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<button id="change-teacher-btn" onclick="toggleTeacher()">СМЕНИТЬ ЭКЗАМЕНАТОРА</button>
+
+<div class="main-viewport">
+    <img id="teacher-img" src="images/teacher_normal.png">
+    <div class="ui-overlay">
+        <div id="status-text">Тяните билет</div>
+        <div id="tickets-selection" class="tickets-grid"></div>
+        <div id="quiz-section">
+            <h1 id="question-label"></h1>
+            <div id="options"></div>
+        </div>
+        <button id="reset-btn" onclick="location.reload()">НА ПЕРЕСДАЧУ</button>
+    </div>
+</div>
+
+<script>
+    const teacherConfigs = {
+        delon: { normal: "images/teacher_normal.png", angry: "images/teacher_angry.png", name: "ГП" },
+        belmondo: { normal: "images/belmondo_normal.png", angry: "images/belmondo_angry.png", name: "ВЮ" }
+    };
+
+    let teacherKey = sessionStorage.getItem('teacherKey') || 'delon';
+    let ticketsWon = 0;
+    let currentTicket = null;
+
+    function init() {
+        document.getElementById('teacher-img').src = teacherConfigs[teacherKey].normal;
+        document.getElementById('status-text').innerText = `Тяните билет`;
+        
+        const grid = document.getElementById('tickets-selection');
+        grid.innerHTML = '';
+        for (let i = 1; i <= 20; i++) {
+            const btn = document.createElement('button');
+            btn.className = 'ticket-btn';
+            btn.onclick = () => takeTicket(btn);
+            grid.appendChild(btn);
+        }
+    }
+
+    function toggleTeacher() {
+        teacherKey = (teacherKey === 'delon') ? 'belmondo' : 'delon';
+        sessionStorage.setItem('teacherKey', teacherKey);
+        location.reload();
+    }
+
+    async function takeTicket(btn) {
+        try {
+            const res = await fetch(`/api/game/draw/${teacherKey}`);
+            currentTicket = await res.json();
+            btn.style.visibility = 'hidden';
+
+            const learned = currentTicket.isLearned ?? currentTicket.is_learned ?? currentTicket.learned;
+
+if (learned === true || learned === "true") {
+    showQuiz();
+} else {
+    if (teacherKey === 'delon') {
+        gameOver("Неверный ответ! Пересдача БАЛБЕСУ!");
+    } else {
+        gameOver("Зря вы претендуете на звание программиста...");
+    }
+}
+        } catch (e) { console.error(e); }
+    }
+
+    function showQuiz() {
+    console.log("DEBUG: Данные билета:", currentTicket);
+
+    const questionLabel = document.getElementById('question-label');
+    const optionsDiv = document.getElementById('options');
+    
+    questionLabel.innerText = currentTicket.question;
+    optionsDiv.innerHTML = '';
+
+    let choices = [
+        currentTicket.optionA || currentTicket.option_a || currentTicket["option-a"] || "НЕТ А",
+        currentTicket.optionB || currentTicket.option_b || currentTicket["option-b"] || "НЕТ B",
+        currentTicket.optionC || currentTicket.option_c || currentTicket["option-c"] || "НЕТ C",
+        currentTicket.optionD || currentTicket.option_d || currentTicket["option-d"] || "НЕТ D"
+    ];
+
+    choices.sort(() => Math.random() - 0.5);
+
+    choices.forEach(text => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.innerText = text; 
+        btn.onclick = () => answer(text);
+        optionsDiv.appendChild(btn);
+    });
+
+    document.getElementById('tickets-selection').style.display = 'none';
+    document.getElementById('quiz-section').style.display = 'block';
+}
+
+    function answer(text) {
+        if (text === currentTicket.correctAnswer) {
+            ticketsWon++;
+            if (ticketsWon === 3) {
+                document.getElementById('status-text').innerText = "К сожалению вы сдали. Но плохо сдали.";
+                document.getElementById('quiz-section').style.display = 'none';
+                document.getElementById('reset-btn').style.display = 'block';
+            } else {
+                document.getElementById('quiz-section').style.display = 'none';
+                document.getElementById('tickets-selection').style.display = 'grid';
+                document.getElementById('status-text').innerText = `Верно. Еще ${3-ticketsWon}`;
+            }
+        } else {
+            if (teacherKey === 'delon') {
+        gameOver("В мое время таких в речке топили! ПЕРЕСДАЧА!");
+    } else {
+        gameOver("БГУ стыдится того, что вы его студент");
+    }
+}
+        }
+
+
+    function gameOver(msg) {
+        document.getElementById('teacher-img').src = teacherConfigs[teacherKey].angry;
+        document.getElementById('status-text').innerText = msg;
+        document.getElementById('status-text').style.color = "#ff4d4d";
+        document.getElementById('tickets-selection').style.display = 'none';
+        document.getElementById('quiz-section').style.display = 'none';
+        document.getElementById('reset-btn').style.display = 'block';
+    }
+
+    init();
+</script>
+</body>
+</html>

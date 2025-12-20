@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель анализа экза</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #282c34;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: #3a404b;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #61dafb;
+            font-size: 2.8em;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+        .stat-item {
+            background: #4a505c;
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.4em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 5px solid #a8c8e1;
+            transition: transform 0.2s ease-in-out;
+        }
+        .stat-item:hover {
+            transform: translateY(-5px);
+            border-left-color: #f1c40f;
+        }
+        .stat-label {
+            color: #c0c0c0;
+        }
+        .stat-value {
+            color: #f1c40f;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .loading {
+            font-size: 1.5em;
+            color: #61dafb;
+            margin-top: 30px;
+        }
+        .error {
+            font-size: 1.5em;
+            color: #e74c3c;
+            margin-top: 30px;
+        }
+        .back-link {
+            margin-top: 30px;
+            display: block;
+            color: #61dafb;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.2s;
+        }
+        .back-link:hover {
+            color: #f1c40f;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Панель анализа</h1>
+        <div id="stats-content">
+            <div class="loading">Загрузка данных...</div>
+        </div>
+    </div>
+    
+    <a href="index.html" class="back-link">← Вернуться к основной игре</a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('http://localhost:8080/api/tickets/stats')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Сетевая ошибка или сервер вернул ошибку');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('stats-content').innerHTML = `
+                        <div class="stat-item">
+                            <span class="stat-label">Шанс прохождения (выучено билетов):</span>
+                            <span class="stat-value">${data}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Всего билетов в базе:</span>
+                            <span class="stat-value" id="total-tickets">Загрузка...</span>
+                        </div>
+                    `;
+                    fetch('http://localhost:8080/api/tickets')
+                        .then(resp => resp.json())
+                        .then(allTickets => {
+                            document.getElementById('total-tickets').innerText = allTickets.length;
+                        })
+                        .catch(err => {
+                            document.getElementById('total-tickets').innerText = 'Ошибка загрузки';
+                            console.error('Ошибка при загрузке общего количества билетов:', err);
+                        });
+                })
+                .catch(error => {
+                    document.getElementById('stats-content').innerHTML = `
+                        <div class="error">Ошибка загрузки данных: ${error.message}. Убедитесь, что бэкенд запущен.</div>
+                    `;
+                    console.error('Ошибка при загрузке статистики:', error);
+                });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+com/roulette/controller/TicketController.class
+com/roulette/model/Ticket.class
+com/roulette/repository/TicketRepository.class
+com/roulette/RoulettespringApplication.class
+com/roulette/service/TicketService.class
+com/roulette/controller/GameController.class
+com/roulette/config/WebConfig.class
+com/roulette/service/GameService.class

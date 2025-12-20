@@ -1,0 +1,8 @@
+/home/palina/java-bsu-2025/Babayeva/laba_adyn+dva/laba/src/main/java/com/roulette/config/WebConfig.java
+/home/palina/java-bsu-2025/Babayeva/laba_adyn+dva/laba/src/main/java/com/roulette/RoulettespringApplication.java
+/home/palina/java-bsu-2025/Babayeva/laba_adyn+dva/laba/src/main/java/com/roulette/service/GameService.java
+/home/palina/java-bsu-2025/Babayeva/laba_adyn+dva/laba/src/main/java/com/roulette/service/TicketService.java
+/home/palina/java-bsu-2025/Babayeva/laba_adyn+dva/laba/src/main/java/com/roulette/controller/GameController.java
+/home/palina/java-bsu-2025/Babayeva/laba_adyn+dva/laba/src/main/java/com/roulette/model/Ticket.java
+/home/palina/java-bsu-2025/Babayeva/laba_adyn+dva/laba/src/main/java/com/roulette/repository/TicketRepository.java
+/home/palina/java-bsu-2025/Babayeva/laba_adyn+dva/laba/src/main/java/com/roulette/controller/TicketController.java
