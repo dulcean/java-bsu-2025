@@ -1,0 +1,56 @@
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: linkshortener-db
+    environment:
+      POSTGRES_DB: linkdb
+      POSTGRES_USER: linkuser
+      POSTGRES_PASSWORD: linkpass
+      TZ: Europe/Moscow
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U linkuser -d linkdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - linkshortener-network
+
+  # Spring Boot Backend
+  backend:
+    build: ./backend
+    container_name: linkshortener-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/linkdb
+      SPRING_DATASOURCE_USERNAME: linkuser
+      SPRING_DATASOURCE_PASSWORD: linkpass
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - linkshortener-network
+
+  # Nginx Frontend
+  frontend:
+    build: ./frontend
+    container_name: linkshortener-frontend
+    ports:
+      - "80:80"
+      - "81:81"
+    depends_on:
+      - backend
+    networks:
+      - linkshortener-network
+
+volumes:
+  postgres_data:
+
+networks:
+  linkshortener-network:
+    driver: bridge

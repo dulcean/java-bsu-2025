@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORS Demo - Spy Page</title>
+    <meta name="description" content="Демонстрация CORS - шпионская страница">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="spy-theme">
+    <div class="container">
+        <header class="header">
+            <h1>Шпиёнская страничка</h1>
+            <p class="subtitle">Демонстрация CORS (Cross-Origin Resource Sharing)</p>
+            <a id="back-link" href="#" class="spy-link">🔗 Вернуться на главную</a>
+        </header>
+
+        <main class="main">
+            <div class="info-card">
+                <h3>Шпиёнская инфа 🕵️‍♂️</h3>
+                <p>
+                    Эта страничка висит на другом поддомене (или на порту 81, если ты локально). 
+                    А запросы разрешены только с оригинальной страницы.
+                </p>
+            </div>
+
+            <div class="cors-demo-card">
+                <h3>Тест CORS-запроса</h3>
+                <div class="demo-controls">
+                    <button id="fetch-links-btn" class="btn-primary">
+                        Получить все ссылки (GET)
+                    </button>
+                    <button id="create-spy-link-btn" class="btn-secondary">
+                        Создать ссылку (POST)
+                    </button>
+                </div>
+
+                <div id="cors-status" class="cors-status">
+                    <span class="status-indicator"></span>
+                    <span class="status-text">Нажмите кнопку для теста</span>
+                </div>
+
+                <div id="response-container" class="response-container hidden">
+                    <h4>Ответ:</h4>
+                    <pre id="response-data"></pre>
+                </div>
+            </div>
+
+            <section class="links-section">
+                <div class="section-header">
+                    <h2>Перехваченные ссылки</h2>
+                </div>
+                <div id="spy-links-container" class="links-container">
+                    <div class="empty-state">
+                        <span class="empty-icon">—</span>
+                        <p>Нажмите "Получить все ссылки" для теста CORS</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+        </footer>
+    </div>
+
+    <div id="toast" class="toast hidden">
+        <span id="toast-message"></span>
+    </div>
+
+    <script src="js/spy.js"></script>
+</body>
+</html>
