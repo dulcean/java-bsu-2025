@@ -26,8 +26,21 @@ docker-compose up -d --build
 - **Spy Page (CORS Demo)**: http://localhost:81
 
 ## Архитектура
+![Project Visualization](./photo.jpg)
 
-щя будет
+```mermaid
+graph TD
+    User["Пользователь"] -->|"Заходит в браузер"| Frontend["Frontend (Nginx :80)"]
+    User -->|"API запросы"| Backend["Backend (Spring Boot :8080)"]
+    Frontend -->|"Раздает статику"| User
+    Backend -->|"Чтение/Запись данных"| DB[("PostgreSQL :5432")]
+    
+    subgraph Docker Network
+        Frontend
+        Backend
+        DB
+    end
+```
 
 ## Эндпоинты
 
